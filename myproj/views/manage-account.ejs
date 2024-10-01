@@ -1,0 +1,187 @@
+<%- include('partials/header', { title: 'Manage Accounts' }) %>
+
+<div class="container mt-5">
+    <h2>Manage Accounts</h2>
+    <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#insertModal">Add User</button>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Level</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="usersTableBody">
+            <!-- Users will be populated here via AJAX -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Insert User Modal -->
+<div class="modal fade" id="insertModal" tabindex="-1" role="dialog" aria-labelledby="insertModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="insertModalLabel">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="insertForm">
+                    <div class="form-group">
+                        <label for="insertUserName">User Name:</label>
+                        <input type="text" class="form-control" id="insertUserName" name="userName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="insertEmail">Email:</label>
+                        <input type="email" class="form-control" id="insertEmail" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="insertPassword">Password:</label>
+                        <input type="password" class="form-control" id="insertPassword" name="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="insertLevelName">Level Name:</label>
+                        <input type="text" class="form-control" id="insertLevelName" name="levelName" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Update User Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateModalLabel">Update User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <div class="form-group">
+                        <label for="updateUserName">User Name:</label>
+                        <input type="text" class="form-control" id="updateUserName" name="userName" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateEmail">Email:</label>
+                        <input type="email" class="form-control" id="updateEmail" name="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="updatePassword">Password:</label>
+                        <input type="password" class="form-control" id="updatePassword" name="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateLevelName">Level Name:</label>
+                        <input type="text" class="form-control" id="updateLevelName" name="levelName">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        function fetchUsers() {
+            $.ajax({
+                url: '/api/users',
+                method: 'GET',
+                success: function(data) {
+                    const tbody = $('#usersTableBody');
+                    tbody.empty();
+                    data.forEach(user => {
+                        tbody.append(`
+                            <tr>
+                                <td>${user.userName}</td>
+                                <td>${user.Email}</td>
+                                <td>${user.levelName}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" onclick="editUser('${user.userName}', '${user.Email}', '${user.Password}', '${user.levelName}')">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteUser('${user.userName}')">Delete</button>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function(err) {
+                    console.error('Error fetching users:', err);
+                }
+            });
+        }
+
+        $('#insertForm').submit(function(event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '/api/users',
+                method: 'POST',
+                data: formData,
+                success: function() {
+                    $('#insertModal').modal('hide');
+                    fetchUsers(); // Refresh the user list
+                },
+                error: function(err) {
+                    console.error('Error adding user:', err);
+                }
+            });
+        });
+
+        $('#updateForm').submit(function(event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '/api/users/' + $('#updateUserName').val(),
+                method: 'PUT',
+                data: formData,
+                success: function() {
+                    $('#updateModal').modal('hide');
+                    fetchUsers();
+                },
+                error: function(err) {
+                    console.error('Error updating user:', err);
+                }
+            });
+        });
+
+        window.editUser = function(userName, email, password, levelName) {
+            $('#updateUserName').val(userName);
+            $('#updateEmail').val(email);
+            $('#updatePassword').val(password);
+            $('#updateLevelName').val(levelName);
+            $('#updateModal').modal('show');
+        };
+
+        window.deleteUser = function(userName) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                $.ajax({
+                    url: '/api/users/' + userName,
+                    method: 'DELETE',
+                    success: function(response) {
+                        alert(response.message);
+                        fetchUsers(); // Refresh the user list
+                    },
+                    error: function(err) {
+                        alert('Error deleting user');
+                        console.error('Error:', err);
+                    }
+                });
+            }
+        };
+
+        fetchUsers();
+    });
+</script>
+
+<%- include('partials/footer') %>

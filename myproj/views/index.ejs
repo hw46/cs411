@@ -1,0 +1,210 @@
+<%- include('partials/header', { title: 'Search Restaurants' }) %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="row">
+                <!-- Cuisine Suggestions -->
+                <div class="col-md-5 cuisine-suggestions">
+                    <h2>Top Cuisines By Rating</h2>
+                    <div id="cuisine-suggestions">
+                <!-- Cuisine suggestions will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="col-md-5 offset-md-2 search-form">
+            <h1 class="text-center">Explore Restaurants</h2>
+            <form id="searchForm" method="GET" action="/search">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="address" placeholder="Address">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="city" placeholder="City">
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="state">
+                        <option value="">State</option>
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="rating">
+                        <option value="">Select Rating</option>
+                        <option value="1.0">1.0</option>
+                        <option value="1.5">1.5</option>
+                        <option value="2.0">2.0</option>
+                        <option value="2.5">2.5</option>
+                        <option value="3.0">3.0</option>
+                        <option value="3.5">3.5</option>
+                        <option value="4.0">4.0</option>
+                        <option value="4.5">4.5</option>
+                        <option value="5.0">5.0</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="reviewCount">
+                        <option value="">Select Review Count</option>
+                        <option value="top10">Top 10% of Most Reviewed</option>
+                        <option value="moreThanAverage">More than Average</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="cuisine">
+                        <option value="">Select Cuisine</option>
+                        <option value="Pizza">Pizza</option>
+                        <option value="Sandwiches">Sandwiches</option>
+                        <option value="Fast Food">Fast Food</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="American (Traditional)">American (Traditional)</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Italian">Italian</option>
+                        <option value="American (New)">American (New)</option>
+                        <option value="Burgers">Burgers</option>
+                        <option value="Breakfast & Brunch">Breakfast & Brunch</option>
+                        <option value="Bars">Bars</option>
+                        <option value="Coffee & Tea">Coffee & Tea</option>
+                        <option value="Seafood">Seafood</option>
+                        <option value="Chicken Wings">Chicken Wings</option>
+                        <option value="Delis">Delis</option>
+                        <option value="Cafes">Cafes</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Salad">Salad</option>
+                        <option value="Barbeque">Barbeque</option>
+                        <option value="Bakeries">Bakeries</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control" name="priceRange">
+                        <option value="">Price</option>
+                        <option value="1">$</option>
+                        <option value="2">$$</option>
+                        <option value="3">$$$</option>
+                        <option value="4">$$$$</option>
+                        <option value="5">$$$$$</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/cuisine-suggestions',
+            method: 'GET',
+            success: function(data) {
+                let suggestions = '<ul>';
+                data.forEach(cuisine => {
+                    suggestions += `<li>${cuisine.cuisine}: ${parseFloat(cuisine.average_rating).toFixed(2)}</li>`;
+                });
+                suggestions += '</ul>';
+                $('#cuisine-suggestions').html(suggestions);
+            },
+            error: function(err) {
+                console.error('Error fetching cuisine suggestions:', err);
+                $('#cuisine-suggestions').html('<p>Error fetching cuisine suggestions.</p>');
+            }
+        });
+    });
+</script>
+
+<style>
+    .container {
+        max-width: 1200px;
+    }
+    .cuisine-suggestions, .search-form {
+        height: 80vh;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .cuisine-suggestions {
+        margin-right: 15px;
+    }
+    .search-form {
+        margin-left: 15px;
+    }
+    #cuisine-suggestions ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    #cuisine-suggestions li {
+        margin: 10px 0;
+        font-size: 16px;
+        padding: 5px;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .btn-primary {
+        margin-top: 15px;
+    }
+    h1, h2 {
+        margin-bottom: 20px;
+        color: #333;
+    }
+</style>
+

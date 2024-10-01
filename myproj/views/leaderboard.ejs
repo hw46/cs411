@@ -1,0 +1,33 @@
+<%- include('partials/header', { title: 'Leaderboard' }) %>
+
+<div class="container mt-5">
+    <h1 class="text-center">Current Review Leaderboard</h1>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h2 class="text-center">Top Users</h2>
+            <ul class="list-group">
+                <% topUsers.forEach(function(user) { %>
+                    <li class="list-group-item">
+                        <strong><%= user.userName %></strong> - <%= user.total_reviews %> reviews
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="text-center">Top Restaurants</h2>
+            <ul class="list-group">
+                <% topRestaurants.forEach(function(restaurant) { %>
+                    <li class="list-group-item">
+                        <strong><%= restaurant.name %></strong> - <%= restaurant.total_reviews %> reviews
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<%- include('partials/footer') %>

@@ -1,0 +1,43 @@
+<%- include('partials/header', { title: 'Admin Dashboard', user: user }) %>
+
+<div class="container mt-4">
+    <h1 class="text-center">Admin Dashboard</h1>
+
+    <!-- Users Table -->
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Level Name</th>
+            </tr>
+        </thead>
+        <tbody id="usersTableBody">
+            <!-- User rows will be appended here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/api/users',
+            method: 'GET',
+            success: function(data) {
+                const tbody = $('#usersTableBody');
+                tbody.empty();
+                data.forEach(user => {
+                    tbody.append(`
+                        <tr>
+                            <td>${user.userName}</td>
+                            <td>${user.Email}</td>
+                            <td>${user.Password}</td>
+                            <td>${user.levelName}</td>
+                        </tr>
+                    `);
+                });
+            }
+        });
+    });
+</script>

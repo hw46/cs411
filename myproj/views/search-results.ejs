@@ -1,0 +1,20 @@
+<%- include('partials/header', { title: 'Search Results' }) %>
+
+<div class="container mt-5">
+    <h1 class="text-center">Search Results</h1>
+    <div class="list-group">
+        <% if (restaurants.length > 0) { %>
+            <% restaurants.forEach(function(restaurant) { %>
+                <a href="/restaurant/<%= restaurant.restaurantID %>" class="list-group-item list-group-item-action">
+                    <h5 class="mb-1"><%= restaurant.name %></h5>
+                    <p class="mb-1"><%= restaurant.address %>, <%= restaurant.city %>, <%= restaurant.state %></p>
+                    <small>Rating: <%= restaurant.rating %> | Reviews: <%= restaurant.reviewCount %> | Cuisine: <%= restaurant.cuisine %> | Price Range: <%= '$'.repeat(restaurant.priceRange) %></small>
+                </a>
+            <% }) %>
+        <% } else { %>
+            <p class="text-center">No results found.</p>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

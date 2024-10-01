@@ -1,0 +1,113 @@
+<%- include('partials/header', { title: 'User Profile' }) %>
+<!-- show Reviews  -->
+<div class="container mt-5">
+    <h1>Welcome, <%= user.userName %> (Level: <%= user.levelName %>)</h1>
+    <h3 class="text-center">Your Reviews</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Review ID</th>
+                <th>Restaurant ID</th>
+                <th>Total Likes</th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reviews.forEach(function(review) { %>
+                <tr>
+                    <td><%= review.reviewID %></td>
+                    <td><a href="/restaurant/<%= review.restaurantID %>"><%= review.restaurantID %></a></td>
+                    <td><%= review.totalLikes %></td>
+                    <td><%= review.rating %></td>
+                    <td><%= review.description %></td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-warning btn-sm" onclick="editReview('<%= review.reviewID %>', '<%= review.restaurantID %>', '<%= review.totalLikes %>', '<%= review.rating %>', `<%= review.description.replace(/`/g, '\\`') %>`)">Edit</button>
+                            <form action="/delete-review" method="post" class="d-inline">
+                                <input type="hidden" name="reviewID" value="<%= review.reviewID %>">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<!-- Edit Review Modal -->
+<div class="modal fade" id="editReviewModal" tabindex="-1" role="dialog" aria-labelledby="editReviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editReviewModalLabel">Edit Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editReviewForm" method="POST" action="/update-review">
+                    <input type="hidden" id="editReviewID" name="reviewID">
+                    <div class="form-group">
+                        <label for="editRestaurantID">Restaurant ID:</label>
+                        <input type="text" class="form-control" id="editRestaurantID" name="restaurantID" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRating">Rating:</label>
+                        <input type="number" step="0.1" class="form-control" id="editRating" name="rating" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescription">Description:</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Review</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- update user info -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Profile</h2>
+            <form id="profileForm" method="POST" action="/profile">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="<%= user.userName %>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="Email" value="<%= user.Email %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="Password" value="<%= user.Password %>" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Update Profile</button>
+            </form>
+            <form id="deleteAccountForm" method="POST" action="/delete-account" class="mt-3">
+                <button type="submit" class="btn btn-danger btn-block">Delete Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function editReview(reviewID, restaurantID, totalLikes, rating, description) {
+        $('#editReviewID').val(reviewID);
+        $('#editRestaurantID').val(restaurantID);
+        $('#editTotalLikes').val(totalLikes);
+        $('#editRating').val(rating);
+        $('#editDescription').val(description);
+        $('#editReviewModal').modal('show');
+    }
+</script>
+
+<%- include('partials/footer') %>

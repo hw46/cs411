@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Schema Sashimi</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Schema Sashimi Reviews 📝</h1>
+        <span>Slicing through the Illinois Culinary Scene</span>
+      </div>
+      <nav>
+        <div class="search">
+          <input type="text" placeholder="Search" />
+          <button id="searchBtn">🔍</button>
+        </div>
+        <button id="loginButton">Login</button>
+        <button id="signUp">Sign Up</button>
+      </nav>
+      <div id="loginPopup" class="popup">
+        <div class="popup-content">
+          <span class="close" id="closePopup">&times;</span>
+          <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required />
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+            <button type="submit">Login</button>
+            <p id="errorMessage" style="color: red"></p>
+          </form>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="categories">
+        <button>Breakfast</button>
+        <button>Fast Food</button>
+        <button>Mexican</button>
+        <button>Pizza</button>
+        <button>Chinese</button>
+      </div>
+      <div class="bottom-section">
+        <div class="results">
+          <div class="sort-table">
+            <p>147 results</p>
+            <div class="filters">
+              <button>Favorites</button>
+              <select>
+                <option>Rating</option>
+              </select>
+              <select>
+                <option>Price</option>
+              </select>
+              <select>
+                <option>Reviews</option>
+              </select>
+              <select>
+                <option>Sort</option>
+              </select>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Restaurant</th>
+                <th>Rating</th>
+                <th>Price</th>
+                <th>Reviews</th>
+                <th>Location</th>
+                <th>URL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="favorite">❤️</span> Schema Sashimi</td>
+                <td>4.3/5</td>
+                <td>$$</td>
+                <td>143</td>
+                <td>Urbana</td>
+                <td>
+                  <a href="http://www.schemasashimi.com"
+                    >www.schemasashimi.com</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <aside>
+          <div class="challenges">
+            <h2>Challenges</h2>
+            <ul>
+              <li>Rate a Korean restaurant - 20 points</li>
+              <li>Rate a Korean restaurant - 20 points</li>
+              <li>Rate a Korean restaurant - 20 points</li>
+            </ul>
+          </div>
+          <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <ul>
+              <li>1. Tian</li>
+              <li>2. Caroline</li>
+              <li>3. Wanli</li>
+              <li>4. Joshua</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <script src="js/home.js"></script>
+    <script src="js/signup.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>
